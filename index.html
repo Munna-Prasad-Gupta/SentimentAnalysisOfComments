@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Local News Sentiment Analyzer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 650px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      color: #ffffff;
+    }
+
+    label {
+      font-weight: 500;
+      margin-top: 20px;
+      display: block;
+      font-size: 16px;
+    }
+
+    textarea, input[type="file"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      outline: none;
+    }
+
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 14px 30px;
+      background: linear-gradient(45deg, #ff4081, #e040fb);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 30px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 25px;
+      border-radius: 15px;
+    }
+
+    .result h3 {
+      color: #ffeb3b;
+      margin-bottom: 10px;
+    }
+
+    .result p {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 26px;
+      }
+      .container {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1> Local News Sentiment Analyzer</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <label for="comment"> Enter Text (or leave blank if using file input):</label>
+      <textarea name="comment" id="comment" rows="4" placeholder="Type your comment here..."></textarea>
+
+      <label for="audio"> Upload Audio File (.wav):</label>
+      <input type="file" name="audio" id="audio" accept=".wav">
+
+      <label for="image"> Upload Image File (.jpg, .jpeg, .png):</label>
+      <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png">
+
+      <button type="submit">Analyze</button>
+    </form>
+
+    {% if comment %}
+    <div class="result">
+      <h3> Analysis Result</h3>
+      <p><strong>Text:</strong> {{ comment }}</p>
+      <p><strong>Sentiment:</strong> {{ sentiment }}</p>
+      <p><strong>Confidence:</strong> {{ '{:.2f}'.format(confidence * 100) }}%</p>
+      <p><strong>Category:</strong> {{ category }}</p>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
